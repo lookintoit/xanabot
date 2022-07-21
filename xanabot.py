@@ -16,6 +16,7 @@ class testbee(commands.Bot):
     #replace "mods" with role that should use bot
 
     @bot.command()
+    @commands.has_role("mods")
     async def announce(ctx, role, message):
         if(len(ctx.message.attachments) == 0):
             await ctx.invoke(bot.get_command('botAnnounce'), role=role, message=message)
@@ -27,6 +28,7 @@ class testbee(commands.Bot):
             
             
     @bot.command()
+    @commands.has_role("bot")
     async def botAnnounce(ctx, role, message):
         rolesObj = ctx.guild.roles
         for roles in rolesObj:
@@ -41,6 +43,7 @@ class testbee(commands.Bot):
                     except: pass
                     
     @bot.command()
+    @commands.has_role("bot")
     async def botFileAnnounce(ctx, role, message):
         filesList = []
         rolesObj = ctx.guild.roles
@@ -52,7 +55,9 @@ class testbee(commands.Bot):
                         print("can't download")
                     else:
                         data = io.BytesIO(await resp.read())
+                        #   turns the data into a discord file object
                         discData = discord.File(fp = data, filename=ctx.message.attachments[i].filename)
+                        #   adds discord file object into a list
                         filesList.append(discData)
         #   sends the files to users
         for roles in rolesObj:
@@ -63,6 +68,7 @@ class testbee(commands.Bot):
                 #   goes through list and sends private message
                 for member in memberList:
                     try:
+                        #   sends discord file object
                         await member.send(files = filesList)
                     except: pass
                     
