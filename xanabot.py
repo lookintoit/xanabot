@@ -20,10 +20,8 @@ class testbee(commands.Bot):
     async def announce(ctx, role, message):
         if(len(ctx.message.attachments) == 0):
             await ctx.invoke(bot.get_command('botAnnounce'), role=role, message=message)
-            print("sending message")
         elif(len(ctx.message.attachments) > 0):
             await ctx.invoke(bot.get_command('botFileAnnounce'), role=role, message=message)
-            print('sending message and data')
             
             
             
