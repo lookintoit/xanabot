@@ -26,7 +26,9 @@ class testbee(commands.Bot):
                 memberList = roles.members
                 #   goes through list and sends private message
                 for member in memberList:
-                    await member.send(message)
+                    try:
+                        await member.send(message)
+                    except: pass
 
 #   runs bot
 def run_bot():
